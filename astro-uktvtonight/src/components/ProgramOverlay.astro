@@ -1,0 +1,248 @@
+---
+/**
+ * ProgramOverlay component for UK TV Tonight
+ * Complete modal overlay with:
+ * 1. Watch Live / Catch Up button linking to official British BVOD stream (BBC iPlayer, ITVX, Channel 4, My5, U)
+ * 2. Add to Calendar (Google & Apple iCal)
+ * 3. Episode synopsis, category, IMDb ratings, and London timing.
+ */
+---
+
+<div 
+  id="program-modal" 
+  class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity duration-200"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+>
+  <div 
+    class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-transform duration-200 scale-95 flex flex-col max-h-[92vh]"
+    id="program-modal-card"
+  >
+    <!-- Modal Image / Header -->
+    <div class="relative h-48 bg-slate-850 overflow-hidden flex-shrink-0 flex items-center justify-center">
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-700 select-none">
+        <span class="text-4xl opacity-30">🇬🇧</span>
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600 mt-1">Freeview UK</span>
+      </div>
+
+      <img 
+        id="modal-image" 
+        src="" 
+        alt="" 
+        class="w-full h-full object-cover hidden relative z-10"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-20"></div>
+
+      <!-- Close Button -->
+      <button 
+        type="button" 
+        onclick="closeProgramModal()"
+        class="absolute top-4 right-4 bg-slate-950/70 hover:bg-slate-800 text-slate-300 hover:text-white w-9 h-9 rounded-full flex items-center justify-center border border-slate-700/60 transition-colors z-30"
+        aria-label="Close modal"
+      >
+        ✕
+      </button>
+
+      <!-- Channel badge in modal -->
+      <div class="absolute bottom-4 left-6 flex items-center gap-3 z-30">
+        <div class="w-10 h-8 bg-slate-950/80 rounded-lg p-1 flex items-center justify-center border border-slate-700/60">
+          <img id="modal-channel-logo" src="" alt="" class="max-w-full max-h-full object-contain" />
+        </div>
+        <div>
+          <span id="modal-channel-name" class="font-bold text-white text-sm drop-shadow"></span>
+          <span id="modal-channel-number" class="text-[11px] text-amber-400 font-mono font-bold block -mt-0.5"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="p-6 overflow-y-auto flex-1 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-2 mb-2 flex-wrap">
+          <span id="modal-time" class="text-xs font-mono font-bold bg-amber-400 text-slate-950 px-2 py-0.5 rounded">
+            --:--
+          </span>
+          <span id="modal-category" class="text-xs text-slate-400 font-medium"></span>
+          <span id="modal-imdb" class="text-xs font-bold bg-amber-400/10 text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded hidden"></span>
+          <span id="modal-watershed" class="text-xs font-bold bg-purple-500/10 text-purple-400 border border-purple-500/30 px-2 py-0.5 rounded hidden">Post-9pm</span>
+        </div>
+
+        <h3 id="modal-title" class="text-2xl font-extrabold text-white mb-3"></h3>
+        <p id="modal-description" class="text-sm text-slate-300 leading-relaxed max-h-40 overflow-y-auto pr-1"></p>
+      </div>
+
+      <!-- Action Buttons: Watch Live / Catch up + Add to Calendar -->
+      <div class="mt-6 pt-4 border-t border-slate-800 space-y-3">
+        <div class="flex items-center gap-3">
+          <!-- Watch Live / Catch Up BVOD -->
+          <a 
+            id="modal-watch-live-btn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-500 active:bg-red-700 text-white font-bold rounded-2xl transition-colors text-sm shadow-md group"
+          >
+            <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span>
+            <span id="modal-watch-label">Watch on BBC iPlayer</span>
+            <span class="text-xs opacity-75 group-hover:translate-x-0.5 transition-transform">↗</span>
+          </a>
+
+          <!-- Add to Calendar -->
+          <button 
+            type="button"
+            id="modal-calendar-btn"
+            onclick="handleAddToCalendar()"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-slate-850 hover:bg-slate-800 text-slate-100 font-bold rounded-2xl border border-slate-700 transition-colors text-sm"
+          >
+            <span>📅</span>
+            <span>Set Reminder</span>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium px-1">
+          <span>UK TV Tonight • Official Freeview Schedule</span>
+          <button 
+            type="button"
+            onclick="closeProgramModal()"
+            class="hover:text-slate-400 transition-colors"
+          >
+            Dismiss
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  let activeProgram = null;
+
+  function openProgramModal(el) {
+    const modal = document.getElementById('program-modal');
+    if (!modal) return;
+
+    const channelSlug = el.getAttribute('data-channel-slug') || '';
+    const title = el.getAttribute('data-title') || '';
+    const desc = el.getAttribute('data-desc') || 'No description available.';
+    const cat = el.getAttribute('data-category') || '';
+    const imdb = el.getAttribute('data-imdb') || '';
+    const startIso = el.getAttribute('data-start') || '';
+    const endIso = el.getAttribute('data-end') || '';
+    const img = el.getAttribute('data-image') || '';
+    const chName = el.getAttribute('data-channel-name') || '';
+    const chNumber = el.getAttribute('data-channel-number') || '';
+    const chLogo = el.getAttribute('data-channel-logo') || '';
+    const bvodName = el.getAttribute('data-bvod-name') || 'Freeview';
+    const streamUrl = el.getAttribute('data-stream-url') || '';
+
+    activeProgram = { channelSlug, title, desc, cat, startIso, endIso, chName, chNumber, chLogo, bvodName, streamUrl };
+
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-description').textContent = desc;
+    document.getElementById('modal-category').textContent = cat;
+
+    // IMDb rating
+    const imdbEl = document.getElementById('modal-imdb');
+    if (imdb && imdb !== 'null') {
+      imdbEl.textContent = `⭐ ${imdb} IMDb`;
+      imdbEl.classList.remove('hidden');
+    } else {
+      imdbEl.classList.add('hidden');
+    }
+
+    // Watershed check
+    const watershedEl = document.getElementById('modal-watershed');
+    if (startIso) {
+      const d = new Date(startIso);
+      const hour = parseInt(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: 'numeric', hourCycle: 'h23' }).format(d), 10);
+      if (hour >= 21 || hour < 5) {
+        watershedEl.classList.remove('hidden');
+      } else {
+        watershedEl.classList.add('hidden');
+      }
+    } else {
+      watershedEl.classList.add('hidden');
+    }
+
+    // Time display
+    if (startIso) {
+      const d = new Date(startIso);
+      const t = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false }).format(d);
+      document.getElementById('modal-time').textContent = t;
+    }
+
+    // Image fallback handling
+    const imgEl = document.getElementById('modal-image');
+    const catFallbacks = {
+      'News': '/images/fallbacks/news.jpg',
+      'News & Documentary': '/images/fallbacks/news.jpg',
+      'Sports': '/images/fallbacks/sports.jpg',
+      'Sport': '/images/fallbacks/sports.jpg',
+      'Drama': '/images/fallbacks/shows.jpg',
+      'Entertainment': '/images/fallbacks/shows.jpg',
+      'Comedy': '/images/fallbacks/comedy.jpg',
+      'Kids & Family': '/images/fallbacks/kids.jpg',
+      'Children': '/images/fallbacks/kids.jpg',
+      'Movie': '/images/fallbacks/movies.jpg',
+      'Film': '/images/fallbacks/movies.jpg',
+      'Default': '/images/fallbacks/default.jpg'
+    };
+    const fallbackPhoto = catFallbacks[cat] || catFallbacks['Default'];
+
+    imgEl.src = img || fallbackPhoto;
+    imgEl.classList.remove('hidden');
+    imgEl.onerror = function() {
+      if (this.src !== fallbackPhoto) {
+        this.src = fallbackPhoto;
+      } else {
+        this.classList.add('hidden');
+      }
+    };
+
+    document.getElementById('modal-channel-name').textContent = chName;
+    document.getElementById('modal-channel-number').textContent = chNumber ? `Freeview Channel ${chNumber}` : '';
+    document.getElementById('modal-channel-logo').src = chLogo;
+
+    // BVOD Watch Live button
+    const watchBtn = document.getElementById('modal-watch-live-btn');
+    const watchLabel = document.getElementById('modal-watch-label');
+    if (streamUrl) {
+      watchBtn.href = streamUrl;
+      watchLabel.textContent = `Watch on ${bvodName}`;
+      watchBtn.classList.remove('hidden');
+    } else {
+      watchBtn.classList.add('hidden');
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProgramModal() {
+    const modal = document.getElementById('program-modal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  function handleAddToCalendar() {
+    if (!activeProgram || !activeProgram.startIso) return;
+    const start = new Date(activeProgram.startIso);
+    const end = activeProgram.endIso ? new Date(activeProgram.endIso) : new Date(start.getTime() + 60 * 60 * 1000);
+
+    const formatCalDate = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
+    const gUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(activeProgram.title)}&details=${encodeURIComponent(activeProgram.desc + '\n\nWatch on ' + activeProgram.chName)}&location=${encodeURIComponent(activeProgram.chName + ' (Freeview UK)')}&dates=${formatCalDate(start)}/${formatCalDate(end)}`;
+    window.open(gUrl, '_blank');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeProgramModal();
+  });
+
+  document.getElementById('program-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'program-modal') closeProgramModal();
+  });
+</script>

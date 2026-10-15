@@ -1,0 +1,281 @@
+---
+/**
+ * Films on TV Tonight — UK TV Tonight
+ * Highly searched UK query: films on tv tonight uk, movies on freeview tonight, film4 schedule tonight
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProgramOverlay from '../components/ProgramOverlay.astro';
+import MoodPickerModal from '../components/MoodPickerModal.astro';
+import { fetchChannels, fetchProgramsForDate } from '../lib/epg';
+import { getTodayInUK, formatDateUK, formatTimeUK, getUKHour, isWatershed } from '../utils/timeSlots';
+import { normCid } from '../utils/channelSlug';
+import { isMovie } from '../utils/programClassifier';
+import { getFallbackImageForProgram, getCleanProgramImage } from '../utils/programImages';
+import type { Channel, Program } from '../types';
+
+const today = getTodayInUK();
+const dateLabel = formatDateUK(today);
+
+interface FilmListing {
+  program: Program;
+  channel: Channel;
+  slug: string;
+}
+
+let filmsTonight: FilmListing[] = [];
+
+try {
+  const [channels, allPrograms] = await Promise.all([
+    fetchChannels(),
+    fetchProgramsForDate(today),
+  ]);
+
+  const channelMap = new Map<string, Channel>();
+  for (const ch of channels) {
+    channelMap.set(normCid(ch.id), ch);
+  }
+
+  for (const prog of allPrograms) {
+    const slug = normCid(prog.channel_id ?? '');
+    const ch = channelMap.get(slug);
+    if (!ch) continue;
+
+    // Evening and prime time hours in London time (from 17:00 onwards)
+    const hour = getUKHour(prog.start_time);
+    const isEvening = hour >= 17 || hour <= 3;
+
+    if (isEvening && isMovie(prog.category, prog.title, prog.description)) {
+      filmsTonight.push({
+        program: prog,
+        channel: ch,
+        slug,
+      });
+    }
+  }
+
+  // Sort chronologically by start time
+  filmsTonight.sort((a, b) => new Date(a.program.start_time).getTime() - new Date(b.program.start_time).getTime());
+} catch (err) {
+  console.error('[films-tonight.astro] Error fetching film listings:', err);
+}
+
+const pageTitle = "Films on TV Tonight UK | Freeview Movies & Film4 Guide";
+const pageDesc = "Complete guide to films on TV tonight in the UK. Discover movies showing across Film4, BBC One, BBC Two, ITV1, and Channel 4 with IMDb scores and ratings.";
+const keywords = "films on tv tonight uk, movies on tv tonight uk, film4 schedule tonight, what films are on tv tonight, freeview movies tonight, best films on tv tonight";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Films on TV Tonight in the UK",
+  "inLanguage": "en-GB",
+  "spatialCoverage": {
+    "@type": "Country",
+    "name": "United Kingdom",
+    "identifier": "GB"
+  },
+  "itemListElement": filmsTonight.slice(0, 15).map((f, idx) => ({
+    "@type": "ListItem",
+    "position": idx + 1,
+    "item": {
+      "@type": "Movie",
+      "name": f.program.title,
+      "description": f.program.description,
+      "aggregateRating": f.program.imdb_rating ? {
+        "@type": "AggregateRating",
+        "ratingValue": String(f.program.imdb_rating),
+        "bestRating": "10",
+        "ratingCount": "1000"
+      } : undefined
+    }
+  }))
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} keywords={keywords} jsonLd={jsonLd}>
+  <Header />
+
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Header Hero -->
+    <div class="mb-8 border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-400 text-xs font-semibold mb-3">
+          <span>🍿 Feature Films & Cinema</span>
+          <span>•</span>
+          <span>{dateLabel}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Films on TV <span class="text-amber-400">Tonight</span> in the UK
+        </h1>
+        <p class="text-base text-slate-400 mt-2 max-w-2xl">
+          Tonight's movies on Film4, BBC, ITV, and Channel 4 with IMDb scores and prime-time start times ({filmsTonight.length} films scheduled).
+        </p>
+      </div>
+
+      <!-- Quick Controls: Filter High Rating -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <button 
+          type="button" 
+          id="imdb-filter-btn" 
+          onclick="toggleImdbFilter()" 
+          class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs transition-colors flex items-center gap-1.5"
+        >
+          <span>⭐</span>
+          <span id="imdb-btn-label">Show High Rated Only (> 7.0)</span>
+        </button>
+        <a 
+          href="/" 
+          class="px-4 py-2 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-bold transition-colors"
+        >
+          🌙 Full Guide
+        </a>
+      </div>
+    </div>
+
+    <!-- Films Grid -->
+    {filmsTonight.length === 0 ? (
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-12 text-center max-w-xl mx-auto my-12">
+        <span class="text-5xl mb-4 block">🍿</span>
+        <h2 class="text-xl font-bold text-white mb-2">No Movies Found for Tonight</h2>
+        <p class="text-sm text-slate-400 mb-6">
+          Check out tonight's prime-time drama series and sports fixtures.
+        </p>
+        <a href="/" class="px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-bold text-sm hover:bg-amber-300 transition-colors">
+          Tonight's Freeview Guide →
+        </a>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="films-grid">
+        {filmsTonight.map(({ program, channel, slug }) => {
+          const timeFormatted = formatTimeUK(program.start_time);
+          const endTimeFormatted = formatTimeUK(program.end_time);
+          const cleanImg = getCleanProgramImage(program.image_url, program.title, 'Movie');
+          const fallbackImg = getFallbackImageForProgram(program.title, 'Movie');
+          const watershed = isWatershed(program.start_time);
+
+          return (
+            <div 
+              class="film-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-200 shadow-lg flex flex-col group cursor-pointer"
+              data-program-id={program.id}
+              data-title={program.title}
+              data-desc={program.description}
+              data-category={program.category}
+              data-start={program.start_time}
+              data-end={program.end_time}
+              data-rating={program.rating}
+              data-imdb={program.imdb_rating || '0'}
+              data-image={cleanImg}
+              data-channel-slug={slug}
+              data-channel-name={channel.name}
+              data-channel-number={channel.number}
+              data-channel-logo={channel.logo}
+              data-bvod-name={channel.bvodPlatform}
+              data-stream-url={channel.streamUrl}
+              onclick="openProgramModal(this)"
+            >
+              <!-- Card Top Header -->
+              <div class="px-4 py-3 border-b border-slate-800/80 flex items-center justify-between gap-3 bg-slate-900/90">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="w-8 h-8 rounded-lg bg-slate-950 p-1 flex items-center justify-center border border-slate-800 shrink-0">
+                    <img src={channel.logo} alt={channel.name} class="max-h-full max-w-full object-contain" />
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-slate-200 truncate block">{channel.name}</span>
+                    <span class="text-[10px] text-amber-400 font-mono font-bold block">CH {channel.number}</span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                  {program.imdb_rating && (
+                    <span class="text-[11px] font-extrabold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">
+                      ⭐ {program.imdb_rating}
+                    </span>
+                  )}
+                  <span class="text-xs font-bold font-mono px-2 py-0.5 rounded bg-amber-400 text-slate-950">
+                    {timeFormatted}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Poster with Background Shield -->
+              <div class="w-full h-48 bg-gradient-to-br from-slate-900 via-slate-850 to-slate-950 overflow-hidden relative flex items-center justify-center">
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-700 select-none">
+                  <span class="text-4xl opacity-30">🍿</span>
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mt-1">Feature Film</span>
+                </div>
+                <img 
+                  src={cleanImg} 
+                  alt={program.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 relative z-10"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  onerror={`if (!this.src.endsWith('${fallbackImg}')) { this.src = '${fallbackImg}'; } else { this.style.display = 'none'; }`}
+                />
+              </div>
+
+              <!-- Card Body -->
+              <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                    {watershed && (
+                      <span class="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">
+                        Post-9pm Watershed
+                      </span>
+                    )}
+                    <span class="text-[10px] font-semibold text-slate-400">
+                      until {endTimeFormatted}
+                    </span>
+                  </div>
+
+                  <h2 class="text-base sm:text-lg font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">
+                    {program.title}
+                  </h2>
+
+                  <p class="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                    {program.description || 'Feature movie presentation on Freeview UK.'}
+                  </p>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-semibold text-amber-400">
+                  <span>View Details & Stream →</span>
+                  <span class="text-slate-500 font-normal text-[11px]">{channel.bvodPlatform || 'Freeview'}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+  </main>
+
+  <ProgramOverlay />
+  <MoodPickerModal />
+  <Footer />
+</BaseLayout>
+
+<script is:inline>
+  let onlyHighRated = false;
+  function toggleImdbFilter() {
+    onlyHighRated = !onlyHighRated;
+    const btnLabel = document.getElementById('imdb-btn-label');
+    const cards = document.querySelectorAll('.film-card');
+
+    if (onlyHighRated) {
+      btnLabel.textContent = 'Showing > 7.0 (Click to Show All)';
+      cards.forEach(card => {
+        const rating = parseFloat(card.getAttribute('data-imdb') || '0');
+        if (rating < 7.0) {
+          card.classList.add('hidden');
+        } else {
+          card.classList.remove('hidden');
+        }
+      });
+    } else {
+      btnLabel.textContent = 'Show High Rated Only (> 7.0)';
+      cards.forEach(card => card.classList.remove('hidden'));
+    }
+  }
+</script>

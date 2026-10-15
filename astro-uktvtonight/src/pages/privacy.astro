@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Privacy Policy | UK TV Tonight";
+const pageDesc = "Privacy policy and data protection information for UK TV Tonight (uktvtonight.co.uk).";
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} noindex={true}>
+  <Header />
+
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed space-y-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Privacy Policy</h1>
+      <p class="text-xs text-slate-400">Last updated: October 2026</p>
+
+      <p>
+        At <strong>UK TV Tonight</strong> (<a href="https://uktvtonight.co.uk" class="text-amber-400">uktvtonight.co.uk</a>), we respect your privacy and are committed to protecting your personal data in accordance with the UK GDPR and the Data Protection Act 2018.
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">1. Information We Collect</h2>
+      <p>
+        We do not require user accounts or personal registration to browse TV listings. We may collect non-personal analytics data such as browser type, device information, and pages visited to improve our services and monitor performance.
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">2. Cookies and Local Storage</h2>
+      <p>
+        We use local browser storage (LocalStorage) strictly to remember your channel favourites and preferences on your device. We do not transmit or sell this preference data to any third parties.
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">3. Third-Party Services and Links</h2>
+      <p>
+        Our website provides links to official British broadcaster platforms (such as BBC iPlayer, ITVX, Channel 4, and My5). When you navigate to these external services, their respective privacy policies and terms apply.
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">4. Contact Us</h2>
+      <p>
+        If you have any questions about this Privacy Policy, you can reach out through our official channels.
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

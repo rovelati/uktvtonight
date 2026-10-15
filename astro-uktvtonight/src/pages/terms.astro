@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Terms of Service | UK TV Tonight";
+const pageDesc = "Terms of service and usage conditions for UK TV Tonight (uktvtonight.co.uk).";
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} noindex={true}>
+  <Header />
+
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed space-y-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Terms of Service</h1>
+      <p class="text-xs text-slate-400">Last updated: October 2026</p>
+
+      <p>
+        Welcome to <strong>UK TV Tonight</strong> (<a href="https://uktvtonight.co.uk" class="text-amber-400">uktvtonight.co.uk</a>). By accessing or using our website, you agree to comply with and be bound by these Terms of Service.
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">1. Nature of the Service</h2>
+      <p>
+        UK TV Tonight provides an aggregated informational television schedule for Freeview and free-to-air channels in the United Kingdom. We do not broadcast, retransmit, or host copyrighted video content. All video links redirect to official broadcaster catch-up and streaming platforms (BBC iPlayer, ITVX, Channel 4, My5, U).
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">2. Accuracy of Listings</h2>
+      <p>
+        While we make every effort to ensure schedules are timely and accurate, television broadcasters may change their programming without prior notice. We accept no liability for any discrepancies in broadcast timing.
+      </p>
+
+      <h2 class="text-lg font-bold text-white mt-6">3. Intellectual Property</h2>
+      <p>
+        All channel names, logos, programme titles, and promotional imagery belong to their respective broadcaster networks (BBC, ITV, Channel 4, Channel 5, Sky, UKTV). Their inclusion is strictly for identification and editorial guide purposes.
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

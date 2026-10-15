@@ -1,0 +1,153 @@
+---
+/**
+ * ChannelCard component for UK TV Tonight
+ * Displays a British TV channel with its prime-time programmes.
+ */
+import { formatTimeUK, isWatershed } from '../utils/timeSlots';
+import { getFallbackImageForProgram, getCleanProgramImage } from '../utils/programImages';
+import BookmarkButton from './BookmarkButton.astro';
+import type { Channel, Program } from '../types';
+
+interface Props {
+  channel: Channel;
+  programs: Program[];
+  slug: string;
+}
+
+const { channel, programs, slug } = Astro.props;
+---
+
+<div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-200 shadow-lg flex flex-col">
+  
+  <!-- Channel Header Bar -->
+  <div class="px-4 py-3 bg-slate-850/80 border-b border-slate-800 flex items-center justify-between">
+    <a href={`/${slug}/`} class="flex items-center gap-3 group">
+      <div class="w-12 h-10 bg-slate-800/80 rounded-lg p-1.5 flex items-center justify-center border border-slate-700/50">
+        <img 
+          src={channel.logo} 
+          alt={channel.name}
+          class="max-w-full max-h-full object-contain"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-mono">
+            CH {channel.number}
+          </span>
+          <h2 class="text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors">
+            {channel.name}
+          </h2>
+        </div>
+        <p class="text-[10px] text-slate-400 font-medium">
+          Freeview UK • {channel.bvodPlatform || 'Free-to-Air'}
+        </p>
+      </div>
+    </a>
+
+    <div class="flex items-center gap-1">
+      <BookmarkButton channelSlug={slug} />
+    </div>
+  </div>
+
+  <!-- Programmes List -->
+  <div class="divide-y divide-slate-800/50 flex-1">
+    {programs.length === 0 ? (
+      <div class="p-6 text-center text-xs text-slate-500">
+        No evening programmes scheduled.
+      </div>
+    ) : (
+      programs.slice(0, 5).map((prog) => {
+        const timeFormatted = formatTimeUK(prog.start_time);
+        const cleanImg = getCleanProgramImage(prog.image_url, prog.title, prog.category);
+        const watershed = isWatershed(prog.start_time);
+        const fallbackImg = getFallbackImageForProgram(prog.title, prog.category);
+
+        return (
+          <div 
+            class="p-3.5 hover:bg-slate-850/50 transition-colors cursor-pointer flex items-center justify-between gap-3 group"
+            data-program-id={prog.id}
+            data-title={prog.title}
+            data-desc={prog.description}
+            data-category={prog.category}
+            data-start={prog.start_time}
+            data-end={prog.end_time}
+            data-rating={prog.rating}
+            data-imdb={prog.imdb_rating}
+            data-image={cleanImg}
+            data-channel-slug={slug}
+            data-channel-name={channel.name}
+            data-channel-number={channel.number}
+            data-channel-logo={channel.logo}
+            data-bvod-name={channel.bvodPlatform}
+            data-stream-url={channel.streamUrl}
+            onclick="openProgramModal(this)"
+          >
+            <!-- Left Info -->
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2 mb-1 flex-wrap">
+                <span class="text-xs font-mono font-bold text-amber-400">
+                  {timeFormatted}
+                </span>
+
+                {prog.category && (
+                  <span class="text-[10px] font-semibold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/50">
+                    {prog.category}
+                  </span>
+                )}
+
+                {prog.imdb_rating && (
+                  <span class="text-[10px] font-extrabold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/30">
+                    ⭐ {prog.imdb_rating}
+                  </span>
+                )}
+
+                {watershed && (
+                  <span class="text-[9px] font-bold text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20" title="Post-9pm Watershed Broadcast">
+                    Post-9pm
+                  </span>
+                )}
+              </div>
+
+              <h3 class="text-sm font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">
+                {prog.title}
+              </h3>
+
+              {prog.sub_title && (
+                <p class="text-xs text-slate-400 line-clamp-1 mt-0.5">
+                  {prog.sub_title}
+                </p>
+              )}
+            </div>
+
+            <!-- Right Thumbnail with Shield -->
+            {cleanImg && (
+              <div class="w-16 h-12 rounded-lg overflow-hidden bg-slate-800 flex-shrink-0 relative flex items-center justify-center">
+                <span class="absolute text-xs opacity-20 select-none">📺</span>
+                <img 
+                  src={cleanImg} 
+                  alt={prog.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform relative z-10"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  onerror={`if (!this.src.endsWith('${fallbackImg}')) { this.src = '${fallbackImg}'; } else { this.style.display = 'none'; }`}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })
+    )}
+  </div>
+
+  <!-- Channel Footer Link -->
+  <div class="px-4 py-2.5 bg-slate-900 border-t border-slate-800/80 text-right">
+    <a 
+      href={`/${slug}/`} 
+      class="text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1"
+    >
+      Full {channel.name} Schedule →
+    </a>
+  </div>
+
+</div>

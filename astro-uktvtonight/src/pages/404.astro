@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Page Not Found | UK TV Tonight";
+const pageDesc = "The requested Freeview schedule or channel page could not be found.";
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} noindex={true}>
+  <Header />
+
+  <main class="flex-1 max-w-xl mx-auto px-4 py-20 text-center flex flex-col items-center justify-center">
+    <div class="w-20 h-20 rounded-3xl bg-slate-900 border border-slate-800 flex items-center justify-center text-4xl mb-6 shadow-xl">
+      📺
+    </div>
+    <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest mb-2">Error 404</span>
+    <h1 class="text-3xl font-extrabold text-white mb-3">Channel or Page Not Found</h1>
+    <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+      The programme or channel listing you are looking for has moved or is currently off air.
+    </p>
+
+    <div class="flex items-center gap-3">
+      <a 
+        href="/" 
+        class="px-5 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition-colors shadow-lg"
+      >
+        Go to Tonight's Guide →
+      </a>
+      <a 
+        href="/films-tonight/" 
+        class="px-5 py-3 rounded-2xl bg-slate-850 hover:bg-slate-800 border border-slate-700 text-slate-200 font-bold text-sm transition-colors"
+      >
+        Films Tonight
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

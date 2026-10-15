@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Deep Oceanic Slate / Midnight -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <!-- Aussie Gold / Sunburst Gradient -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="30%" stop-color="#fbbf24"/>
+      <stop offset="85%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <!-- TV Screen Gradient -->
+    <linearGradient id="screen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+
+    <!-- Screen Glass Sheen -->
+    <linearGradient id="sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- TV Shadow & Glow -->
+    <filter id="drop-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="live-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 1. Outer Rounded App Squircle -->
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="8" y="8" width="496" height="496" rx="110" fill="none" stroke="url(#gold)" stroke-width="10" stroke-opacity="0.85"/>
+
+  <!-- Subtle Top Corner Sheen -->
+  <circle cx="100" cy="100" r="130" fill="url(#sheen)"/>
+
+  <!-- 2. TV Antenna (Freeview Broadcast V-Antenna) -->
+  <g filter="url(#drop-shadow)">
+    <path d="M 195 86 L 256 138 L 317 86" fill="none" stroke="url(#gold)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="195" cy="86" r="16" fill="url(#gold)"/>
+    <circle cx="317" cy="86" r="16" fill="url(#gold)"/>
+  </g>
+
+  <!-- 3. TV Chassis & Screen -->
+  <g filter="url(#drop-shadow)">
+    <!-- Stand -->
+    <rect x="236" y="420" width="40" height="34" rx="4" fill="url(#gold)"/>
+    <rect x="180" y="446" width="152" height="18" rx="9" fill="url(#gold)"/>
+
+    <!-- Screen Bezel -->
+    <rect x="52" y="132" width="408" height="290" rx="36" fill="#090d16" stroke="url(#gold)" stroke-width="12"/>
+
+    <!-- Inner Screen Display -->
+    <rect x="68" y="148" width="376" height="258" rx="24" fill="url(#screen)"/>
+
+    <!-- Glass Reflection -->
+    <path d="M 68 148 L 260 148 L 68 340 Z" fill="url(#sheen)"/>
+
+    <!-- 4. Kangaroo Silhouette Leaping Through TV Screen -->
+    <!-- Crisp, bold, instantly recognizable Australian emblem -->
+    <path d="M 125 365 
+             C 145 358, 175 345, 195 325 
+             C 210 310, 222 285, 226 265 
+             C 230 245, 235 220, 245 200 
+             C 255 180, 268 165, 282 150 
+             C 288 144, 298 135, 310 132 
+             C 314 131, 318 122, 321 112 
+             C 323 105, 328 105, 331 110 
+             C 335 118, 334 128, 330 136 
+             C 338 132, 346 130, 354 133 
+             C 362 136, 366 142, 362 148 
+             C 356 156, 345 160, 336 162 
+             C 330 174, 322 188, 322 204 
+             C 322 216, 328 226, 338 234 
+             C 355 248, 378 256, 400 258 
+             C 406 258, 409 263, 404 267 
+             C 378 280, 342 272, 320 258 
+             C 302 247, 294 238, 284 235 
+             C 275 248, 260 270, 238 285 
+             C 214 300, 185 295, 168 292 
+             C 152 289, 138 296, 128 308 
+             C 118 320, 115 345, 125 365 Z" 
+          fill="url(#gold)"/>
+
+    <!-- Dynamic Motion Star / Southern Cross Accents inside TV -->
+    <polygon points="120,185 124,196 135,198 127,205 129,216 120,210 111,216 113,205 105,198 116,196" fill="#fef08a" opacity="0.9"/>
+    
+    <!-- 5. LIVE Broadcast Indicator -->
+    <circle cx="410" cy="180" r="14" fill="#ef4444" filter="url(#live-glow)"/>
+    <circle cx="410" cy="180" r="7" fill="#ffffff"/>
+  </g>
+</svg>

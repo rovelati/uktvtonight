@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# Cloudflare Pages Redirects & HTTP status codes — Aussie TV Tonight
+# ---------------------------------------------------------------------------
+
+# Direct sitemap-index to direct sitemap
+/sitemap-index.xml     /sitemap.xml         301
+
+# Hub shortcuts & aliases
+/movies                /movies-tonight/     301
+/movies/               /movies-tonight/     301
+/films                 /movies-tonight/     301
+/films/                /movies-tonight/     301
+/cinema                /movies-tonight/     301
+/cinema/               /movies-tonight/     301
+/sport                 /sport-tonight/      301
+/sport/                /sport-tonight/      301
+/sports                /sport-tonight/      301
+/sports/               /sport-tonight/      301
+/shows                 /shows-tonight/      301
+/shows/                /shows-tonight/      301
+/series                /shows-tonight/      301
+/series/               /shows-tonight/      301
+/now                   /on-now/             301
+/now/                  /on-now/             301
+/live                  /on-now/             301
+/live/                 /on-now/             301
+/tomorrow              /tomorrow/           301
+
+# Channel shortcuts
+/channel7              /seven/              301
+/channel7/             /seven/              301
+/ch7                   /seven/              301
+/ch7/                  /seven/              301
+/channel9              /channel-9/          301
+/channel9/             /channel-9/          301
+/ch9                   /channel-9/          301
+/ch9/                  /channel-9/          301
+/channel10             /10/                 301
+/channel10/            /10/                 301
+/network10             /10/                 301
+/network10/            /10/                 301
+/ch10                  /10/                 301
+/ch10/                 /10/                 301
+/abc                   /abc-tv/             301
+/abc/                  /abc-tv/             301
+
+# 410 Gone — removed program URLs
+/program/*             410
+/program               410

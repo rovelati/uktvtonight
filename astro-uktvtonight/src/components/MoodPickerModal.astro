@@ -1,0 +1,117 @@
+---
+/**
+ * MoodPickerModal component for UK TV Tonight
+ * "The 5-Second Decision Maker" — solves choice paralysis for British viewers.
+ */
+---
+
+<div 
+  id="mood-picker-modal" 
+  class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity duration-200"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="mood-title"
+>
+  <div 
+    class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 sm:p-8 flex flex-col"
+  >
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🎲</span>
+        <div>
+          <h3 id="mood-title" class="text-xl font-extrabold text-white">What to Watch Tonight</h3>
+          <p class="text-xs text-slate-400">Tell us what you fancy, we'll pick the best on TV right now.</p>
+        </div>
+      </div>
+      <button 
+        type="button" 
+        onclick="closeMoodPickerModal()"
+        class="bg-slate-850 hover:bg-slate-800 text-slate-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center border border-slate-700/60 transition-colors"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Mood Selector Grid -->
+    <div class="grid grid-cols-2 gap-3 mb-6" id="mood-buttons-grid">
+      <a 
+        href="/films-tonight/"
+        class="p-4 rounded-2xl bg-slate-850 hover:bg-amber-400/10 border border-slate-800 hover:border-amber-400/40 text-left transition-all group flex flex-col justify-between h-28"
+      >
+        <span class="text-2xl">🍿</span>
+        <div>
+          <span class="text-sm font-bold text-white group-hover:text-amber-300 block">Top Film</span>
+          <span class="text-[11px] text-slate-400">⭐ 7.0+ IMDb Picks</span>
+        </div>
+      </a>
+
+      <a 
+        href="/shows-tonight/"
+        class="p-4 rounded-2xl bg-slate-850 hover:bg-purple-500/10 border border-slate-800 hover:border-purple-500/40 text-left transition-all group flex flex-col justify-between h-28"
+      >
+        <span class="text-2xl">🔍</span>
+        <div>
+          <span class="text-sm font-bold text-white group-hover:text-purple-300 block">British Drama</span>
+          <span class="text-[11px] text-slate-400">Crime, Mystery & Soaps</span>
+        </div>
+      </a>
+
+      <a 
+        href="/sport-tonight/"
+        class="p-4 rounded-2xl bg-slate-850 hover:bg-emerald-500/10 border border-slate-800 hover:border-emerald-500/40 text-left transition-all group flex flex-col justify-between h-28"
+      >
+        <span class="text-2xl">🏉</span>
+        <div>
+          <span class="text-sm font-bold text-white group-hover:text-emerald-300 block">Live Sport</span>
+          <span class="text-[11px] text-slate-400">Football, Rugby, Snooker</span>
+        </div>
+      </a>
+
+      <a 
+        href="/on-now/"
+        class="p-4 rounded-2xl bg-slate-850 hover:bg-red-500/10 border border-slate-800 hover:border-red-500/40 text-left transition-all group flex flex-col justify-between h-28"
+      >
+        <span class="text-2xl">🔴</span>
+        <div>
+          <span class="text-sm font-bold text-white group-hover:text-red-300 block">On Right Now</span>
+          <span class="text-[11px] text-slate-400">Live Progress Bar</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Quick Footer Tip -->
+    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+      <span>Watershed starts at 9:00 PM (21:00)</span>
+      <button 
+        type="button" 
+        onclick="closeMoodPickerModal()"
+        class="text-amber-400 font-semibold hover:underline"
+      >
+        Browse All Channels
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function openMoodPickerModal() {
+    const modal = document.getElementById('mood-picker-modal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMoodPickerModal() {
+    const modal = document.getElementById('mood-picker-modal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('mood-picker-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'mood-picker-modal') closeMoodPickerModal();
+  });
+</script>

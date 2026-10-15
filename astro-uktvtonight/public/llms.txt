@@ -1,0 +1,21 @@
+# UK TV Tonight (uktvtonight.co.uk)
+> Comprehensive Freeview TV Guide and British Television Schedules for UK Viewers
+
+## Overview
+UK TV Tonight (https://uktvtonight.co.uk) is a fast, modern television guide for Freeview, Freesat, and terrestrial TV in the United Kingdom.
+It covers all major public and commercial broadcasters including BBC One, BBC Two, ITV1, Channel 4, Channel 5, Film4, ITV2, U&Dave, E4, Sky Arts, and more.
+
+## Core Pages
+- Homepage (What's on TV Tonight): https://uktvtonight.co.uk/
+- Films on TV Tonight (with IMDb scores): https://uktvtonight.co.uk/films-tonight/
+- Live Sport on Freeview (Football, Rugby, Cricket): https://uktvtonight.co.uk/sport-tonight/
+- British TV Shows & Dramas: https://uktvtonight.co.uk/shows-tonight/
+- On Now & Next (Real-Time Guide): https://uktvtonight.co.uk/on-now/
+- Tomorrow's TV Guide: https://uktvtonight.co.uk/tomorrow/
+
+## Catch-Up & Streaming Services (BVOD)
+- BBC iPlayer: BBC One, BBC Two, BBC Four, CBBC, CBeebies
+- ITVX: ITV1, ITV2, ITV3, ITV4
+- Channel 4 Streaming: Channel 4, Film4, E4, More4
+- My5: Channel 5, 5USA, 5Action
+- U (UKTV Play): U&Dave, U&Drama, U&Yesterday
