@@ -146,6 +146,7 @@ Gruppi principali (non disabilitare senza capire l’impatto):
 - **ProntoFarmacie:** turni federfarma/regioni, pharmaround batch, sitemap, job alerts, lavoro/spider ogni 4h.
 - **Veterinari:** enrichment prioritario (06:00), lead marketing (08:00, 13:00).
 - **Fernsehheute DE:** EPG/tmdb/rebuild astro (04:xx–05:xx).
+- **UK TV Tonight:** Rebuild EPG mattutino (05:30), refresh EPG e ping IndexNow serale pre-prime time (17:30 = 16:30 UK), ping notturno domani (23:30 = 22:30 UK). Log in `/var/log/uktvtonight/`.
 
 Prima di aggiungere cron RealTime Discover: usare `flock` + log dedicato sotto `/var/log/realtimediscover/`.
 
