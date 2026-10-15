@@ -6,4 +6,7 @@ dist/
 .new-server-passwd
 .cloudflare-token
 NUOVO-SERVER.ssh
+*service*account*.json
+*-c491fade6de8.json
+google-*.json
 .DS_Store
