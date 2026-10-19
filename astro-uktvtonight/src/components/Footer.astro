@@ -3,6 +3,15 @@
  * Footer component for UK TV Tonight
  */
 const todayYear = new Date().getFullYear();
+
+const INTERNATIONAL_SITES = [
+  { name: 'inTVstasera.it', flag: '🇮🇹', url: 'https://www.intvstasera.it/' },
+  { name: 'ProgrammeCeSoir.fr', flag: '🇫🇷', url: 'https://programmecesoir.fr/' },
+  { name: 'FernsehHeute.de', flag: '🇩🇪', url: 'https://fernsehheute.de/' },
+  { name: 'AussieTVTonight.com', flag: '🇦🇺', url: 'https://aussietvtonight.com/' },
+  { name: 'TeleEstaNoche.es', flag: '🇪🇸', url: 'https://www.teleestanoche.es/' },
+  { name: 'TVWieczor.pl', flag: '🇵🇱', url: 'https://tvwieczor.pl/' },
+];
 ---
 
 <footer class="mt-auto border-t border-slate-800 bg-slate-950 py-12 text-slate-400 text-xs">
@@ -49,6 +58,19 @@ const todayYear = new Date().getFullYear();
         </ul>
       </div>
 
+    </div>
+
+    <!-- International TV Guides -->
+    <div class="mb-8 pt-6 border-t border-slate-900">
+      <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3">International TV Guides</h4>
+      <nav class="flex flex-wrap gap-x-5 gap-y-2 text-xs" aria-label="International TV Guides">
+        {INTERNATIONAL_SITES.map(site => (
+          <a href={site.url} class="inline-flex items-center gap-1.5 hover:text-amber-400 transition-colors">
+            <span>{site.flag}</span>
+            <span>{site.name}</span>
+          </a>
+        ))}
+      </nav>
     </div>
 
     <!-- Bottom Bar -->
