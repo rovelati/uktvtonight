@@ -75,20 +75,35 @@ def main():
 
     print(f"Generated SQL at {SQL_FILE} ({os.path.getsize(SQL_FILE)} bytes).")
 
-    # Now execute on Contabo VPS via sshpass
-    print("Uploading and executing SQL on Contabo VPS...")
-    cmd = (
-        f"sshpass -f '{PASSWD_FILE}' scp -o StrictHostKeyChecking=no '{SQL_FILE}' root@37.60.255.18:/tmp/epg-uk.sql && "
-        f"sshpass -f '{PASSWD_FILE}' ssh -o StrictHostKeyChecking=no root@37.60.255.18 'sudo -u postgres psql -d uktvtonight -f /tmp/epg-uk.sql > /tmp/psql_uk.log 2>&1 && rm -f /tmp/epg-uk.sql && echo OK'"
-    )
-    res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-    if res.returncode == 0:
-        print("Successfully synchronized EPG data to Contabo PostgreSQL database!")
-        if os.path.exists(SQL_FILE):
-            os.remove(SQL_FILE)
+    # Detect if we are running locally on the VPS
+    is_on_vps = os.path.exists('/var/www/uktvtonight.co.uk') or os.path.exists('/var/log/uktvtonight')
+
+    if is_on_vps:
+        print("Running locally on Contabo VPS: applying SQL directly via su - postgres...")
+        cmd = f'su - postgres -c "psql -d uktvtonight -f {SQL_FILE}"'
+        res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        if res.returncode == 0:
+            print("Successfully synchronized EPG data to Contabo PostgreSQL database!")
+            if os.path.exists(SQL_FILE):
+                os.remove(SQL_FILE)
+        else:
+            print(f"Failed to sync to Postgres directly: {res.stderr}")
+            sys.exit(res.returncode)
     else:
-        print(f"Failed to sync to Postgres: {res.stderr}")
-        sys.exit(res.returncode)
+        # Now execute on Contabo VPS via sshpass from remote dev machine
+        print("Uploading and executing SQL on Contabo VPS via SSH...")
+        cmd = (
+            f"sshpass -f '{PASSWD_FILE}' scp -o StrictHostKeyChecking=no '{SQL_FILE}' root@37.60.255.18:/tmp/epg-uk.sql && "
+            f"sshpass -f '{PASSWD_FILE}' ssh -o StrictHostKeyChecking=no root@37.60.255.18 'su - postgres -c \"psql -d uktvtonight -f /tmp/epg-uk.sql\" > /tmp/psql_uk.log 2>&1 && rm -f /tmp/epg-uk.sql && echo OK'"
+        )
+        res = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        if res.returncode == 0:
+            print("Successfully synchronized EPG data to Contabo PostgreSQL database!")
+            if os.path.exists(SQL_FILE):
+                os.remove(SQL_FILE)
+        else:
+            print(f"Failed to sync to Postgres: {res.stderr}")
+            sys.exit(res.returncode)
 
 if __name__ == '__main__':
     main()
