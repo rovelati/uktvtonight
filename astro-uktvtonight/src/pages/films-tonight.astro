@@ -248,7 +248,9 @@ const jsonLd = {
               </div>
             </div>
             {index === 2 && (
-              <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+              <div class="col-span-full my-2">
+                <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+              </div>
             )}
             </>
           );

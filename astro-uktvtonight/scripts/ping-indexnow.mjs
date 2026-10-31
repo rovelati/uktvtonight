@@ -6,8 +6,7 @@
 
 const HOST = 'uktvtonight.co.uk';
 const KEYS = [
-  '4f25c5dc3491468f8459b92c21bb3ac1',
-  '211149cc9ea6e1474b4a1881220eef9b'
+  '72d90202f4998882d9ffa3d171e045bb'
 ];
 
 const ENDPOINTS = [

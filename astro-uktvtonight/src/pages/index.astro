@@ -168,10 +168,14 @@ const jsonLd = {
             slug={ch.slug} 
           />
           {idx === 5 && (
-            <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+            <div class="col-span-full my-2">
+              <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+            </div>
           )}
           {idx === 17 && (
-            <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+            <div class="col-span-full my-2">
+              <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+            </div>
           )}
         </>
       ))}
