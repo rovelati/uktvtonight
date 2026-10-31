@@ -8,6 +8,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProgramOverlay from '../components/ProgramOverlay.astro';
 import MoodPickerModal from '../components/MoodPickerModal.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { ADSENSE_SLOTS } from '../lib/adsense';
 import { fetchChannels, fetchProgramsForDate } from '../lib/epg';
 import { getTodayInUK, formatDateUK, formatTimeUK } from '../utils/timeSlots';
 import { normCid } from '../utils/channelSlug';
@@ -96,9 +98,9 @@ try {
   console.error('[on-now.astro] Error rendering on-now page:', err);
 }
 
-const pageTitle = "On TV Now in the UK | Live Freeview Guide & Progress";
-const pageDesc = "What's on TV right now across all UK Freeview channels. Real-time broadcast schedules, progress bars, and live streaming links for BBC, ITV, Channel 4, and Channel 5.";
-const keywords = "what's on tv right now uk, on tv now, live tv guide uk, freeview now and next, bbc one on now, itv1 on now";
+const pageTitle = "What's on TV Now & Next in the UK | Live Freeview Guide Right Now";
+const pageDesc = "What's on TV right now across all UK Freeview channels. Real-time broadcast schedules, progress bars, and live streaming links for BBC, ITV, Channel 4, Channel 5, and digital TV.";
+const keywords = "whats on tv now, what's on tv right now uk, on tv now, live tv guide uk, freeview now and next, bbc one on now, itv1 on now";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -147,7 +149,7 @@ const jsonLd = {
 
     <!-- Live Channels Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {liveChannels.map(({ channel, slug, current, next }) => {
+      {liveChannels.map(({ channel, slug, current, next }, idx) => {
         if (!current) return null;
         const curStart = formatTimeUK(current.start_time);
         const curEnd = formatTimeUK(current.end_time);
@@ -155,6 +157,7 @@ const jsonLd = {
         const fallbackImg = getFallbackImageForProgram(current.title, current.category);
 
         return (
+          <>
           <div 
             class="live-card bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-200 shadow-lg p-5 flex flex-col justify-between cursor-pointer group"
             data-start-iso={current.start_time}
@@ -263,9 +266,16 @@ const jsonLd = {
               </div>
             )}
           </div>
+          {idx === 3 && (
+            <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+          )}
+          </>
         );
       })}
     </div>
+
+    <!-- Pre-Footer Banner -->
+    <AdSlot slot={ADSENSE_SLOTS.PRE_FOOTER} minHeight={250} className="mt-12" />
 
   </main>
 

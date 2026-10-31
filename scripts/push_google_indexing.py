@@ -15,11 +15,14 @@ from pathlib import Path
 ROOT = "https://uktvtonight.co.uk"
 CHANNELS = [
     "bbc-one", "bbc-two", "itv1", "channel-4", "channel-5",
-    "itv2", "bbc-four", "itv3", "sky-arts", "e4", "film4",
-    "dave", "drama", "itv4", "yesterday", "5usa", "cbbc",
+    "itv2", "bbc-four", "itv3", "sky-arts", "quest", "e4", "film4",
+    "really", "more4", "dave", "drama", "itv4", "yesterday",
+    "5star", "5action", "great-movies", "dmax", "quest-red",
+    "legend", "food-network", "hgtv", "5select", "challenge",
+    "4seven", "great-tv", "5usa", "talking-pictures-tv", "cbbc",
     "cbeebies", "bbc-news", "sky-news"
 ]
-ROOTS = ["/", "/films-tonight", "/sport-tonight", "/shows-tonight", "/on-now", "/tomorrow"]
+ROOTS = ["/", "/tv-guide-tonight", "/films-tonight", "/sport-tonight", "/shows-tonight", "/on-now", "/tomorrow"]
 
 ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"
 SCOPES = ["https://www.googleapis.com/auth/indexing"]

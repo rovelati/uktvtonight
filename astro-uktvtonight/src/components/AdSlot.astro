@@ -1,0 +1,106 @@
+---
+/**
+ * AdSlot.astro — UX-First Google AdSense Component for UK TV Tonight
+ *
+ * Principles:
+ * - Clear disclosure as "Advertisement" (Google AdSense & UK ASA / CAP Code compliant)
+ * - Fixed minimum height container (minHeight) preventing layout shifts (CLS = 0)
+ * - Safe margins from interactive controls and CTAs
+ * - Dark-mode optimized styling
+ * - IntersectionObserver lazy-loading for maximum viewability and high RPM
+ */
+import { ADSENSE_CLIENT_ID, ADSENSE_SLOTS } from '../lib/adsense';
+
+interface Props {
+  slot?: string;
+  format?: string;
+  responsive?: string;
+  minHeight?: number;
+  className?: string;
+  label?: string;
+  inFeedWrapper?: boolean;
+}
+
+const {
+  slot = ADSENSE_SLOTS.IN_FEED_CHANNELS,
+  format = 'auto',
+  responsive = 'true',
+  minHeight = 250,
+  className = '',
+  label = 'Advertisement',
+  inFeedWrapper = false,
+} = Astro.props;
+---
+
+<aside
+  aria-label={label}
+  data-ad-container
+  data-infeed-ad={inFeedWrapper ? 'true' : null}
+  class:list={[
+    'uk-ad-slot rounded-3xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center shadow-lg transition-opacity',
+    inFeedWrapper ? 'my-4 w-full col-span-full' : 'my-8',
+    className,
+  ]}
+>
+  <div class="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 select-none">
+    {label}
+  </div>
+  <div
+    class="w-full overflow-hidden flex items-center justify-center mx-auto"
+    style={`min-height: ${minHeight}px;`}
+  >
+    <ins
+      class="adsbygoogle block w-full mx-auto"
+      style={`display: block; min-height: ${minHeight}px; width: 100%;`}
+      data-ad-client={ADSENSE_CLIENT_ID}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive={responsive}
+    ></ins>
+  </div>
+</aside>
+
+<script is:inline>
+  (function () {
+    if (window.__ukAdsenseInit) return;
+    window.__ukAdsenseInit = true;
+
+    function pushAd(ins) {
+      if (!ins || ins.getAttribute('data-adsbygoogle-status') || ins.dataset.ukPushed === 'true') return;
+      if (ins.offsetParent === null) return; // hidden element
+      try {
+        ins.dataset.ukPushed = 'true';
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
+    }
+
+    function initAds() {
+      var slots = document.querySelectorAll('ins.adsbygoogle:not([data-uk-observed])');
+      for (var i = 0; i < slots.length; i++) {
+        var ins = slots[i];
+        if (ins.closest('#program-overlay')) continue;
+        ins.setAttribute('data-uk-observed', 'true');
+
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(function (entries, obs) {
+            for (var j = 0; j < entries.length; j++) {
+              if (entries[j].isIntersecting) {
+                pushAd(entries[j].target);
+                obs.unobserve(entries[j].target);
+              }
+            }
+          }, { rootMargin: '300px 0px' });
+          io.observe(ins);
+        } else {
+          setTimeout((function (el) { return function () { pushAd(el); }; })(ins), 200);
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAds);
+    } else {
+      initAds();
+    }
+  })();
+</script>

@@ -172,6 +172,134 @@ CANONICAL_CHANNELS = {
         'logo': '/channel-logos/sky-news.svg',
         'bvod': 'Sky News',
         'stream': 'https://news.sky.com/watch-live'
+    },
+    'QUEST.HD.uk': {
+        'id': 'quest',
+        'name': 'Quest',
+        'number': 12,
+        'logo': '/channel-logos/quest.svg',
+        'bvod': 'Discovery+',
+        'stream': 'https://www.questtv.co.uk'
+    },
+    'Really.uk': {
+        'id': 'really',
+        'name': 'U&Really',
+        'number': 17,
+        'logo': '/channel-logos/really.svg',
+        'bvod': 'U',
+        'stream': 'https://u.co.uk'
+    },
+    'More4.HD.uk': {
+        'id': 'more4',
+        'name': 'More4',
+        'number': 18,
+        'logo': '/channel-logos/more4.svg',
+        'bvod': 'Channel 4',
+        'stream': 'https://www.channel4.com/now/more4'
+    },
+    '5STAR.uk': {
+        'id': '5star',
+        'name': '5Star',
+        'number': 32,
+        'logo': '/channel-logos/5star.svg',
+        'bvod': 'My5',
+        'stream': 'https://www.channel5.com'
+    },
+    '5ACTION.uk': {
+        'id': '5action',
+        'name': '5Action',
+        'number': 33,
+        'logo': '/channel-logos/5action.svg',
+        'bvod': 'My5',
+        'stream': 'https://www.channel5.com'
+    },
+    'GREAT!.movies.uk': {
+        'id': 'great-movies',
+        'name': 'GREAT! movies',
+        'number': 34,
+        'logo': '/channel-logos/great-movies.svg',
+        'bvod': 'GREAT! Player',
+        'stream': 'https://www.great-tv.co.uk'
+    },
+    'DMAX.uk': {
+        'id': 'dmax',
+        'name': 'DMAX',
+        'number': 39,
+        'logo': '/channel-logos/dmax.svg',
+        'bvod': 'Discovery+',
+        'stream': 'https://www.dmax.co.uk'
+    },
+    'Quest.Red.uk': {
+        'id': 'quest-red',
+        'name': 'Quest Red',
+        'number': 40,
+        'logo': '/channel-logos/quest-red.svg',
+        'bvod': 'Discovery+',
+        'stream': 'https://www.questtv.co.uk'
+    },
+    'Legend.uk': {
+        'id': 'legend',
+        'name': 'Legend',
+        'number': 41,
+        'logo': '/channel-logos/legend.svg',
+        'bvod': 'Freeview',
+        'stream': 'https://www.legend-tv.co.uk'
+    },
+    'Food.Network.uk': {
+        'id': 'food-network',
+        'name': 'Food Network',
+        'number': 43,
+        'logo': '/channel-logos/food-network.svg',
+        'bvod': 'Discovery+',
+        'stream': 'https://www.discoveryplus.com/gb'
+    },
+    'HGTV.uk': {
+        'id': 'hgtv',
+        'name': 'HGTV',
+        'number': 44,
+        'logo': '/channel-logos/hgtv.svg',
+        'bvod': 'Discovery+',
+        'stream': 'https://www.discoveryplus.com/gb'
+    },
+    '5SELECT.uk': {
+        'id': '5select',
+        'name': '5Select',
+        'number': 46,
+        'logo': '/channel-logos/5select.svg',
+        'bvod': 'My5',
+        'stream': 'https://www.channel5.com'
+    },
+    'Challenge.uk': {
+        'id': 'challenge',
+        'name': 'Challenge',
+        'number': 48,
+        'logo': '/channel-logos/challenge.svg',
+        'bvod': 'Freeview',
+        'stream': 'https://www.sky.com'
+    },
+    '4seven.uk': {
+        'id': '4seven',
+        'name': '4seven',
+        'number': 49,
+        'logo': '/channel-logos/4seven.svg',
+        'bvod': 'Channel 4',
+        'stream': 'https://www.channel4.com/now/4seven'
+    },
+    'GREAT!.tv.uk': {
+        'id': 'great-tv',
+        'name': 'GREAT! tv',
+        'number': 50,
+        'logo': '/channel-logos/great-tv.svg',
+        'bvod': 'GREAT! Player',
+        'stream': 'https://www.great-tv.co.uk'
+    },
+    'TalkingPictures.uk': {
+        'id': 'talking-pictures-tv',
+        'name': 'Talking Pictures TV',
+        'number': 82,
+        'logo': '/channel-logos/talking-pictures-tv.svg',
+        'bvod': 'Talking Pictures TV',
+        'stream': 'https://talkingpicturestv.co.uk'
     }
 }
 

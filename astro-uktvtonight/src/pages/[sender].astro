@@ -9,6 +9,8 @@ import Footer from '../components/Footer.astro';
 import ProgramOverlay from '../components/ProgramOverlay.astro';
 import MoodPickerModal from '../components/MoodPickerModal.astro';
 import BookmarkButton from '../components/BookmarkButton.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { ADSENSE_SLOTS } from '../lib/adsense';
 import { fetchChannels, fetchProgramsForDate } from '../lib/epg';
 import { getTodayInUK, formatDateUK, formatTimeUK, isCurrentBroadcastDay, isWatershed } from '../utils/timeSlots';
 import { normCid } from '../utils/channelSlug';
@@ -117,6 +119,9 @@ const jsonLd = {
         </a>
       )}
     </div>
+
+    <!-- Channel Top AdSlot -->
+    <AdSlot slot={ADSENSE_SLOTS.CHANNEL_MID_CONTENT} minHeight={200} className="mb-8" />
 
     <!-- Programme Schedule Timeline -->
     <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
@@ -230,6 +235,9 @@ const jsonLd = {
         )}
       </div>
     </div>
+
+    <!-- Pre-Footer Banner -->
+    <AdSlot slot={ADSENSE_SLOTS.PRE_FOOTER} minHeight={250} className="mt-8" />
 
   </main>
 

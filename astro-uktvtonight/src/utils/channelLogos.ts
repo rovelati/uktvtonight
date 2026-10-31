@@ -22,6 +22,22 @@ export const UK_CHANNEL_LOGOS: Record<string, string> = {
   'cbeebies': '/channel-logos/cbeebies.svg',
   'bbc-news': '/channel-logos/bbc-news.svg',
   'sky-news': '/channel-logos/sky-news.svg',
+  'quest': '/channel-logos/quest.svg',
+  'really': '/channel-logos/really.svg',
+  'more4': '/channel-logos/more4.svg',
+  '5star': '/channel-logos/5star.svg',
+  '5action': '/channel-logos/5action.svg',
+  'great-movies': '/channel-logos/great-movies.svg',
+  'dmax': '/channel-logos/dmax.svg',
+  'quest-red': '/channel-logos/quest-red.svg',
+  'legend': '/channel-logos/legend.svg',
+  'food-network': '/channel-logos/food-network.svg',
+  'hgtv': '/channel-logos/hgtv.svg',
+  '5select': '/channel-logos/5select.svg',
+  'challenge': '/channel-logos/challenge.svg',
+  '4seven': '/channel-logos/4seven.svg',
+  'great-tv': '/channel-logos/great-tv.svg',
+  'talking-pictures-tv': '/channel-logos/talking-pictures-tv.svg',
 };
 
 export function getChannelLogo(slug: string, fallbackUrl?: string | null): string {

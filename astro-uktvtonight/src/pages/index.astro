@@ -7,8 +7,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ChannelCard from '../components/ChannelCard.astro';
+import AdSlot from '../components/AdSlot.astro';
 import ProgramOverlay from '../components/ProgramOverlay.astro';
 import MoodPickerModal from '../components/MoodPickerModal.astro';
+import { ADSENSE_SLOTS } from '../lib/adsense';
 import { fetchChannels, fetchProgramsForDate } from '../lib/epg';
 import { getTodayInUK, formatDateUK, getUKHour } from '../utils/timeSlots';
 import { normCid } from '../utils/channelSlug';
@@ -156,16 +158,27 @@ const jsonLd = {
       </div>
     </div>
 
-    <!-- Freeview Channel Grid -->
+    <!-- Freeview Channel Grid with In-Feed Monetization -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {channelsWithPrograms.map(ch => (
-        <ChannelCard 
-          channel={ch} 
-          programs={ch.programs} 
-          slug={ch.slug} 
-        />
+      {channelsWithPrograms.map((ch, idx) => (
+        <>
+          <ChannelCard 
+            channel={ch} 
+            programs={ch.programs} 
+            slug={ch.slug} 
+          />
+          {idx === 5 && (
+            <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+          )}
+          {idx === 17 && (
+            <AdSlot slot={ADSENSE_SLOTS.IN_FEED_CHANNELS} inFeedWrapper={true} minHeight={250} />
+          )}
+        </>
       ))}
     </div>
+
+    <!-- Pre-Footer High-Viewability Banner -->
+    <AdSlot slot={ADSENSE_SLOTS.PRE_FOOTER} minHeight={250} className="mt-12" />
 
   </main>
 

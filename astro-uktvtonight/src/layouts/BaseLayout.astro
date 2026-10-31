@@ -34,6 +34,30 @@ import '../styles/global.css';
 <!doctype html>
 <html lang="en-GB" class="bg-slate-950 text-slate-100 antialiased">
   <head>
+    <!-- UniConsent CMP (Consent Management Platform) -->
+    <script is:inline async fetchpriority="low" src="https://cmp.uniconsent.com/v2/cmp.js" data-license="b039ba7539"></script>
+
+    <!-- Google Consent Mode v2 Default (Privacy First) -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("consent", "default", {
+        "ad_storage": "denied",
+        "ad_user_data": "denied",
+        "ad_personalization": "denied",
+        "analytics_storage": "denied",
+        "wait_for_update": 500
+      });
+    </script>
+
+    <!-- Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-2168172914069272" />
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2168172914069272"
+      crossorigin="anonymous"
+    ></script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6FQBN2X7K2"></script>
     <script is:inline>

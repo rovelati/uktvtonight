@@ -22,7 +22,23 @@ export const UK_LIVE_STREAMS: Record<string, string> = {
   'cbbc': 'https://www.bbc.co.uk/iplayer/live/cbbc',
   'cbeebies': 'https://www.bbc.co.uk/iplayer/live/cbeebies',
   'bbc-news': 'https://www.bbc.co.uk/iplayer/live/bbcnews',
-  'sky-news': 'https://news.sky.com/watch-live'
+  'sky-news': 'https://news.sky.com/watch-live',
+  'quest': 'https://www.questtv.co.uk',
+  'really': 'https://u.co.uk/shows',
+  'more4': 'https://www.channel4.com/now/more4',
+  '5star': 'https://www.channel5.com',
+  '5action': 'https://www.channel5.com',
+  'great-movies': 'https://www.great-tv.co.uk',
+  'dmax': 'https://www.dmax.co.uk',
+  'quest-red': 'https://www.questtv.co.uk',
+  'legend': 'https://www.legend-tv.co.uk',
+  'food-network': 'https://www.discoveryplus.com/gb',
+  'hgtv': 'https://www.discoveryplus.com/gb',
+  '5select': 'https://www.channel5.com',
+  'challenge': 'https://www.sky.com',
+  '4seven': 'https://www.channel4.com/now/4seven',
+  'great-tv': 'https://www.great-tv.co.uk',
+  'talking-pictures-tv': 'https://talkingpicturestv.co.uk'
 };
 
 export const UK_BVOD_PLATFORMS: Record<string, string> = {
@@ -45,5 +61,21 @@ export const UK_BVOD_PLATFORMS: Record<string, string> = {
   'cbbc': 'BBC iPlayer',
   'cbeebies': 'BBC iPlayer',
   'bbc-news': 'BBC iPlayer',
-  'sky-news': 'Sky News App'
+  'sky-news': 'Sky News App',
+  'quest': 'Discovery+',
+  'really': 'U (UKTV Play)',
+  'more4': 'Channel 4 Streaming',
+  '5star': 'My5',
+  '5action': 'My5',
+  'great-movies': 'GREAT! Player',
+  'dmax': 'Discovery+',
+  'quest-red': 'Discovery+',
+  'legend': 'Freeview',
+  'food-network': 'Discovery+',
+  'hgtv': 'Discovery+',
+  '5select': 'My5',
+  'challenge': 'Sky / Freeview',
+  '4seven': 'Channel 4 Streaming',
+  'great-tv': 'GREAT! Player',
+  'talking-pictures-tv': 'Talking Pictures TV'
 };
