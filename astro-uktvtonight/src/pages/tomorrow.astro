@@ -65,14 +65,14 @@ try {
   console.error('[tomorrow.astro] Error rendering tomorrow page:', err);
 }
 
-const pageTitle = "What's on TV Tomorrow in the UK | Freeview TV Guide";
-const pageDesc = `Tomorrow's TV guide for the UK (${dateLabel}). Complete schedules for BBC One, BBC Two, ITV1, Channel 4, Channel 5, and Film4 prime-time films.`;
-const keywords = "what's on tv tomorrow uk, tomorrow's tv guide, freeview tomorrow schedule, bbc one tomorrow, itv1 tomorrow, film4 tomorrow";
+const pageTitle = "What's on TV Tomorrow | Freeview TV Guide | UK TV Tonight";
+const pageDesc = `Tomorrow's TV guide (${dateLabel}). Complete schedules for BBC One, BBC Two, ITV1, Channel 4, Channel 5, and Film4 prime-time films.`;
+const keywords = "what's on tv tomorrow, tomorrow's tv guide, freeview tomorrow schedule, bbc one tomorrow, itv1 tomorrow, film4 tomorrow";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": `What's on TV Tomorrow in the UK (${dateLabel})`,
+  "name": `What's on TV Tomorrow (${dateLabel})`,
   "inLanguage": "en-GB",
   "spatialCoverage": {
     "@type": "Country",
@@ -96,10 +96,10 @@ const jsonLd = {
           <span>{dateLabel}</span>
         </div>
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          What's on TV <span class="text-blue-400">Tomorrow</span> in the UK
+          What's on TV <span class="text-blue-400">Tomorrow</span>
         </h1>
         <p class="text-base text-slate-400 mt-2 max-w-2xl">
-          Tomorrow night's prime-time schedules for all Freeview channels in England, Scotland, Wales, and Northern Ireland.
+          Tomorrow night's prime-time schedules for all Freeview channels.
         </p>
       </div>
 

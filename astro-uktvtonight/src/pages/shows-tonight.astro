@@ -61,14 +61,14 @@ try {
   console.error('[shows-tonight.astro] Error fetching show listings:', err);
 }
 
-const pageTitle = "TV Shows on Tonight UK | British Dramas, Series & Soaps Schedule";
+const pageTitle = "TV Shows on Tonight: British Dramas, Series & Soaps Schedule | UK TV Tonight";
 const pageDesc = "Tonight's TV shows, British dramas, comedies, and soaps on Freeview UK. Schedules and catch-up links for BBC One, BBC Two, ITV1, Channel 4, and Dave.";
-const keywords = "tv shows on tv tonight uk, british dramas on tv tonight, soaps tonight bbc itv, eastenders time tonight, coronation street schedule, what series are on tv tonight";
+const keywords = "tv shows on tv tonight, british dramas on tv tonight, soaps tonight bbc itv, eastenders time tonight, coronation street schedule, what series are on tv tonight";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "TV Shows and Dramas on Tonight in the UK",
+  "name": "TV Shows and Dramas on Tonight",
   "inLanguage": "en-GB",
   "spatialCoverage": {
     "@type": "Country",
@@ -103,7 +103,7 @@ const jsonLd = {
           <span>{dateLabel}</span>
         </div>
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          TV Shows on <span class="text-cyan-400">Tonight</span> in the UK
+          TV Shows & Series on <span class="text-cyan-400">Tonight</span>
         </h1>
         <p class="text-base text-slate-400 mt-2 max-w-2xl">
           British drama episodes, comedy specials, and flagship soaps broadcasting this evening across Freeview channels ({showsTonight.length} episodes listed).

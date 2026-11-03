@@ -63,14 +63,14 @@ try {
   console.error('[films-tonight.astro] Error fetching film listings:', err);
 }
 
-const pageTitle = "Films on TV Tonight UK | Freeview Movies & Film4 Guide";
-const pageDesc = "Complete guide to films on TV tonight in the UK. Discover movies showing across Film4, BBC One, BBC Two, ITV1, and Channel 4 with IMDb scores and ratings.";
-const keywords = "films on tv tonight uk, movies on tv tonight uk, film4 schedule tonight, what films are on tv tonight, freeview movies tonight, best films on tv tonight";
+const pageTitle = "Films on TV Tonight: Freeview Movies & Film4 Guide | UK TV Tonight";
+const pageDesc = "Complete guide to films on TV tonight. Discover movies showing across Film4, BBC One, BBC Two, ITV1, and Channel 4 with IMDb scores and ratings.";
+const keywords = "films on tv tonight, movies on tv tonight, film4 schedule tonight, what films are on tv tonight, freeview movies tonight, best films on tv tonight";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Films on TV Tonight in the UK",
+  "name": "Films on TV Tonight",
   "inLanguage": "en-GB",
   "spatialCoverage": {
     "@type": "Country",
@@ -109,7 +109,7 @@ const jsonLd = {
           <span>{dateLabel}</span>
         </div>
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Films on TV <span class="text-amber-400">Tonight</span> in the UK
+          Films on TV <span class="text-amber-400">Tonight</span>
         </h1>
         <p class="text-base text-slate-400 mt-2 max-w-2xl">
           Tonight's movies on Film4, BBC, ITV, and Channel 4 with IMDb scores and prime-time start times ({filmsTonight.length} films scheduled).

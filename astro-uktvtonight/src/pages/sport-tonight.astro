@@ -60,14 +60,14 @@ try {
   console.error('[sport-tonight.astro] Error fetching sports listings:', err);
 }
 
-const pageTitle = "Live Sport on TV Tonight UK | Freeview Football, Rugby & MOTD";
-const pageDesc = "Find all live sport on TV tonight in the UK on free-to-air television. Schedules for football, Match of the Day, rugby, snooker, darts, and motorsport.";
-const keywords = "sport on tv tonight uk, live football on tv tonight uk, match of the day time tonight, freeview sport tonight, bbc sport schedule tonight, itv4 sport";
+const pageTitle = "Sport on TV Tonight: Live Football, Rugby & Freeview Guide | UK TV Tonight";
+const pageDesc = "Find all live sport on TV tonight on free-to-air television. Schedules for football, Match of the Day, rugby, snooker, darts, and motorsport.";
+const keywords = "sport on tv tonight, live football on tv tonight, match of the day time tonight, freeview sport tonight, bbc sport schedule tonight, itv4 sport";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Live Sport on TV Tonight in the UK",
+  "name": "Live Sport on TV Tonight",
   "inLanguage": "en-GB",
   "spatialCoverage": {
     "@type": "Country",
@@ -108,7 +108,7 @@ const jsonLd = {
           <span>{dateLabel}</span>
         </div>
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Sport on TV <span class="text-emerald-400">Tonight</span> in the UK
+          Sport on TV <span class="text-emerald-400">Tonight</span>
         </h1>
         <p class="text-base text-slate-400 mt-2 max-w-2xl">
           Live games, tournament coverage, and sports highlights on BBC, ITV, Channel 4, and Freeview ({sportsTonight.length} sporting broadcasts listed).

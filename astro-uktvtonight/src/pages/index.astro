@@ -68,14 +68,14 @@ try {
   console.error('[index.astro] Error rendering UK homepage:', err);
 }
 
-const pageTitle = "What's on TV Tonight in the UK | Freeview TV Guide";
+const pageTitle = "What's on TV Tonight | Freeview UK TV Guide";
 const pageDesc = "Complete UK TV guide for tonight. Find prime time schedules, movies on Film4, soaps, and live sport across BBC One, BBC Two, ITV1, Channel 4, Channel 5, and all Freeview channels.";
-const keywords = "what's on tv tonight uk, tv guide tonight, freeview tv guide, on tv tonight, bbc tv guide, itv guide tonight, film4 schedule tonight, british tv guide";
+const keywords = "what's on tv tonight, tv guide tonight, freeview tv guide, on tv tonight, bbc tv guide, itv guide tonight, film4 schedule tonight, british tv guide";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "What's on TV Tonight in the UK",
+  "name": "What's on TV Tonight",
   "description": pageDesc,
   "inLanguage": "en-GB",
   "spatialCoverage": {
@@ -118,7 +118,7 @@ const jsonLd = {
         </div>
 
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          What's on TV <span class="text-amber-400">Tonight</span> in the UK
+          What's on TV <span class="text-amber-400">Tonight</span>
         </h1>
         <p class="text-base text-slate-400 mt-2 max-w-2xl">
           Tonight's prime-time Freeview schedules for BBC One, BBC Two, ITV1, Channel 4, Channel 5, Film4, and top digital networks.
