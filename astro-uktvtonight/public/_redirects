@@ -1,17 +1,17 @@
 # ---------------------------------------------------------------------------
-# Cloudflare Pages Redirects & HTTP status codes — Aussie TV Tonight
+# Cloudflare Pages / Static Redirects & HTTP status codes — UK TV Tonight
 # ---------------------------------------------------------------------------
 
-# Direct sitemap-index to direct sitemap
-/sitemap-index.xml     /sitemap.xml         301
+# Redirect standard sitemap.xml to Astro sitemap-index.xml
+/sitemap.xml           /sitemap-index.xml   301
 
 # Hub shortcuts & aliases
-/movies                /movies-tonight/     301
-/movies/               /movies-tonight/     301
-/films                 /movies-tonight/     301
-/films/                /movies-tonight/     301
-/cinema                /movies-tonight/     301
-/cinema/               /movies-tonight/     301
+/movies                /films-tonight/      301
+/movies/               /films-tonight/      301
+/films                 /films-tonight/      301
+/films/                /films-tonight/      301
+/cinema                /films-tonight/      301
+/cinema/               /films-tonight/      301
 /sport                 /sport-tonight/      301
 /sport/                /sport-tonight/      301
 /sports                /sport-tonight/      301
@@ -24,25 +24,28 @@
 /now/                  /on-now/             301
 /live                  /on-now/             301
 /live/                 /on-now/             301
-/tomorrow              /tomorrow/           301
+/guide                 /tv-guide-tonight/   301
+/guide/                /tv-guide-tonight/   301
+/tv-guide              /tv-guide-tonight/   301
+/tv-guide/             /tv-guide-tonight/   301
 
-# Channel shortcuts
-/channel7              /seven/              301
-/channel7/             /seven/              301
-/ch7                   /seven/              301
-/ch7/                  /seven/              301
-/channel9              /channel-9/          301
-/channel9/             /channel-9/          301
-/ch9                   /channel-9/          301
-/ch9/                  /channel-9/          301
-/channel10             /10/                 301
-/channel10/            /10/                 301
-/network10             /10/                 301
-/network10/            /10/                 301
-/ch10                  /10/                 301
-/ch10/                 /10/                 301
-/abc                   /abc-tv/             301
-/abc/                  /abc-tv/             301
+# Major UK Freeview Channel shortcuts
+/bbcone                /bbc-one/            301
+/bbcone/               /bbc-one/            301
+/bbctwo                /bbc-two/            301
+/bbctwo/               /bbc-two/            301
+/bbcfour               /bbc-four/           301
+/bbcfour/              /bbc-four/           301
+/itv                   /itv1/               301
+/itv/                  /itv1/               301
+/ch4                   /channel-4/          301
+/ch4/                  /channel-4/          301
+/channel4              /channel-4/          301
+/channel4/             /channel-4/          301
+/ch5                   /channel-5/          301
+/ch5/                  /channel-5/          301
+/channel5              /channel-5/          301
+/channel5/             /channel-5/          301
 
 # 410 Gone — removed program URLs
 /program/*             410
